@@ -1,0 +1,17 @@
+{
+    "title":"shoereo_app",
+    "description":"This template builds an app that traces \"Hello, World!\" and breaks into the debugger.",
+    "id":"shoereo-app.project.kinoma.marvell.com",
+    "tags":[
+        "emptySample"
+    ],
+    "Create":{
+        "main":"main"
+    },
+    "iap140":{
+    	"main":"main"
+    },
+    "Element":{
+        "main":"main"
+    }
+}

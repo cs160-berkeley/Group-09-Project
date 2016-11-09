@@ -1,0 +1,5 @@
+# Ignore illustrator, photoshop, and zip files
+target/*
+*.ai
+*.zip
+*.psd
