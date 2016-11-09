@@ -82,34 +82,23 @@ var settingsButton = new Container({
 	})
 });
 
-var marksetsButton = new menuButtonTemplate({ string: "Marksets", top: 100, number: 1 });
+var marksetsButton = new menuButtonTemplate({ string: "Marksets", top: 80, number: 1 });
 var movesetsButton = new menuButtonTemplate({ string: "Movesets", top: 20, number: 2 });
 var profileButton = new menuButtonTemplate({ string: "Profile", top: 20, number: 3 });
 var friendsButton = new menuButtonTemplate({ string: "Friends", top: 20, number: 4 });
 
 var title = new Picture({
-	top: 120, left: 35,
-	url: "assets/logo.png"
+	top: 80, left: 35,
+	url: "img/title.png"
 });
 
-var menuBackground = new Picture({
-  top:0, bottom: 0, left: 0, right: 0,
-  url: "assets/menuBackground.png"
-});
-
-var titleScreen = new Layer({
+var titleScreen = new Column({
 	top: 0, bottom: 0, left: 0, right: 0,
 	skin: titleBackgroundColor,
 	contents: [
-    menuBackground,
-    new Column({
-      top: 0, bottom: 0, left: 0, right: 0,
-    	contents: [
-        title,
-    		marksetsButton, movesetsButton, profileButton, friendsButton,
-    		settingsButton
-      ]
-    }),
+		title,
+		marksetsButton, movesetsButton, profileButton, friendsButton,
+		settingsButton
 	]
 });
 
@@ -148,53 +137,89 @@ let Navbar = Line.template($ => ({
    	],
 }));
 
-let BadPerformanceSection = Layer.template($ => ({
-  left: 0, right: 0,
-  contents: [
-    new Picture({ left: 0, right: 0, url:"assets/performance/performanceBar.png" }),
-    new Label({ left: 10, string: $.title, style: thinStyle}),
-    new Label({ right: 30, string: $.percent.toString() + "%", style: badPerformanceStyle}),
-  ]
+
+//myChanges
+
+
+let movesetStyle = new Style({font: "bold 40px", color: "#56CCF2"})
+let whiteStyle = new Style({font: "bold 36px", color: "white"})
+let greenSkin = new Skin({ fill: "#19F777" });
+let bluetoothStyle = new Style({font: "bold 18px", color: "#828282"})
+
+
+
+//Title
+let StringPane = new Label({
+    left: 0, right: 0, top: 25,
+    style: movesetStyle,
+    string: "New MoveSet",
+});
+
+
+//Record Button
+let StringPane2 = new Label({
+    left: 0, right: 0,
+    style: whiteStyle,
+    string: "Start Dancing",
+});
+
+//Bluetooth
+let StringPane3 = new Label({
+    left: 0, right: 0,
+    style: bluetoothStyle,
+    string: "Shoes Connected!",
+});
+
+let bluetoothButton = new Container({height: 40, width: 250, top: 25, skin: greenSkin, 
+	contents: [
+		new Picture({left: 5, height: 30, width: 30, url: "bluetooth.png", active: true,}),
+		StringPane3,
+	]
+	});
+	
+var recordButtonTemplate = Container.template($ => ({
+	top: $.top, left: ((375 - 250)/2), width: 250, active: true, 
+	contents: [
+		StringPane2,
+	],
+	behavior: Behavior({
+		onCreate: function(content) {
+            this.upSkin = new Skin({ fill: "#1CCD67" });
+            this.downSkin = new Skin({ fill: "#EB5757" });
+            this.click = 0;
+            content.skin = this.upSkin;
+        },
+        onTouchBegan: function(content) {
+        	
+        },
+        onTouchEnded: function(content) {
+            if (this.click == 0){
+            	content.skin = this.downSkin;
+            	this.click = 1;
+            	StringPane2.string = "Stop Dancing";
+            	
+            }
+            else if (this.click == 1){
+            	content.skin = this.upSkin;
+            	this.click = 0;
+            	StringPane2.string = "Start Dancing";
+            }
+		}
+	})
 }));
 
-let OkayPerformanceSection = Layer.template($ => ({
-  left: 0, right: 0,
-  contents: [
-    new Picture({ left: 0, right: 0, url:"assets/performance/performanceBar.png" }),
-    new Label({ left: 10, string: $.title, style: thinStyle}),
-    new Label({ right: 30, string: $.percent.toString() + "%", style: okayPerformanceStyle}),
-  ],
 
-}));
-
-let GoodPerformanceSection = Layer.template($ => ({
-  left: 0, right: 0,
-  contents: [
-    new Picture({ left: 0, right: 0, url:"assets/performance/performanceBar.png" }),
-    new Label({ left: 10, string: $.title, style: thinStyle}),
-    new Label({ right: 30, string: $.percent.toString() + "%", style: goodPerformanceStyle}),
-  ]
-}));
+var startButton = new recordButtonTemplate({ string: "Start Dancing", top: 20});
 
 let performanceScreen = new Column({
     left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
     name: 'performanceContainer',
     contents: [
         new Navbar(),
-        new Picture({ left: 0, right: 0, top: 30, url:"assets/performance/performanceTitle.png"}),
-        new Picture({ left: 0, right: 0, top: 15, url:"assets/performance/performanceGraph.png"}),
-        new Column({
-          left: 0, right: 0, top: 50, bottom: 0, skin: backgroundSkin,
-          contents: [
-            new Label({left: 5, string: "Your Performance", style: titleStyle}),
-            new OkayPerformanceSection({title: "Section 1", percent: 67}),
-            new GoodPerformanceSection({title: "Section 2", percent: 100}),
-            new GoodPerformanceSection({title: "Section 3", percent: 100}),
-            new GoodPerformanceSection({title: "Section 4", percent: 100}),
-            new GoodPerformanceSection({title: "Section 5", percent: 100}),
-            new BadPerformanceSection({title: "Section 6", percent: 30}),
-            new GoodPerformanceSection({title: "Section 7", percent: 100}),
-          ],
-        }),
-    ],
+        StringPane,
+        bluetoothButton,
+        startButton,
+        
+    ]
 });
+
