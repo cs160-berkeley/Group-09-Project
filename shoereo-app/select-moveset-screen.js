@@ -1,5 +1,7 @@
 /* === IMPORT STATEMENTS === */
 import { changeScreen, backScreen, switchTitleScreen } from "main";
+import { newMovesetScreen } from "new-moveset-screen";
+import { performanceScreen } from "performance-screen";
 
 /* === NAVBAR === */
 
@@ -36,22 +38,27 @@ let backgroundSkin = new Skin({ fill: "#333333" });
 let thinStyle = new Style({ font: "25px", color: "#56CCF2"});
 
 let MovesetBar = Container.template($ => ({
-	left: 30, right: 30,
+	left: 30, right: 30, active: true,
   contents: [
     new Picture({ left: 0, right: 0, url:"assets/moveset/friendBar.png" }),
     new Label({ left: 80, string: $.title, style: thinStyle})
   ],
+  behavior: Behavior({
+    onTouchEnded: function(content) {
+      changeScreen(performanceScreen);
+    }
+  })
 }));
 
 let CreateBar = Layer.template($ => ({
-	left: 30, right: 30,
+	left: 30, right: 30, active: true, 
   contents: [
     new Picture({ left: 0, right: 0, url:"assets/moveset/create.png" }),
     new Label({ left: 80, string: "Create New Markset", style: thinStyle})
   ],
 	behavior: Behavior({
 		onTouchEnded: function(content) {
-				trace("Do something");
+				changeScreen(newMovesetScreen);
 		}
 	})
 }));

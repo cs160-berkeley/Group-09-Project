@@ -1,5 +1,6 @@
 /* === IMPORT STATEMENTS === */
 import { changeScreen, backScreen, switchTitleScreen } from "main";
+import { sharingMovesetScreen } from "sharing-screen";
 
 /* === NAVBAR === */
 
@@ -144,16 +145,17 @@ var recordButtonTemplate = Container.template($ => ({
           content.focus();
         },
         onTouchEnded: function(content) {
-            if (this.click == 0){
+            if (this.click == 0) {
               content.skin = this.stopSkin;
               this.click = 1;
               StringPane2.string = "Stop Dancing";
               
-            }
-            else if (this.click == 1){
+            } else if (this.click == 1) {
               content.skin = this.shareSkin;
               this.click = 2;
               StringPane2.string = "Share MoveSet";
+            } else if (this.click == 2) {
+              changeScreen(sharingMovesetScreen);
             }
     }
   })
