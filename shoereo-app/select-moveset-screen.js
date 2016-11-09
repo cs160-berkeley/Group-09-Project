@@ -11,9 +11,9 @@ var Navbar = Line.template($ => ({
     height: 40,
     skin: navbarSkin,
     contents: [
-      Label($, { 
+      Label($, {
         left: 5, top: 5, bottom: 5, active: true, string: "<", style: navbarBackStyle,
-        behavior: Behavior({ 
+        behavior: Behavior({
           onTouchEnded: function(content) {
             backScreen();
           }
@@ -33,7 +33,7 @@ var Navbar = Line.template($ => ({
 /* === SELECT MOVESET SCREEN === */
 
 let backgroundSkin = new Skin({ fill: "#333333" });
-let thinStyle = new Style({ font: "30px", color: "#56CCF2"});
+let thinStyle = new Style({ font: "25px", color: "#56CCF2"});
 
 let MovesetBar = Container.template($ => ({
 	left: 30, right: 30,
@@ -41,6 +41,19 @@ let MovesetBar = Container.template($ => ({
     new Picture({ left: 0, right: 0, url:"assets/moveset/friendBar.png" }),
     new Label({ left: 80, string: $.title, style: thinStyle})
   ],
+}));
+
+let CreateBar = Layer.template($ => ({
+	left: 30, right: 30,
+  contents: [
+    new Picture({ left: 0, right: 0, url:"assets/moveset/create.png" }),
+    new Label({ left: 80, string: "Create New Markset", style: thinStyle})
+  ],
+	behavior: Behavior({
+		onTouchEnded: function(content) {
+				trace("Do something");
+		}
+	})
 }));
 
 export let selectMovesetScreen = new Column({
@@ -52,6 +65,7 @@ export let selectMovesetScreen = new Column({
         new Column({
           left: 0, right: 0, top: 50, bottom: 0, skin: backgroundSkin,
           contents: [
+            new CreateBar(),
 						new MovesetBar({title: "Dance 1"}),
 						new MovesetBar({title: "Dance 2"}),
 						new MovesetBar({title: "Dance 3"}),
