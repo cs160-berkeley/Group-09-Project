@@ -1,5 +1,6 @@
 /* === IMPORT STATEMENTS === */
-import { changeScreen, titleScreen } from "main";
+import { changeScreen, backScreen, switchTitleScreen } from "main";
+import { sharingPerformanceScreen } from "sharing-screen";
 
 /* === NAVBAR === */
 
@@ -11,12 +12,19 @@ export var Navbar = Line.template($ => ({
     height: 40,
     skin: navbarSkin,
     contents: [
-      Label($, { left:5, top: 5, bottom: 5, string: "<", style: navbarBackStyle }),
+      Label($, {
+        left: 5, top: 5, bottom: 5, active: true, string: "<", style: navbarBackStyle,
+        behavior: Behavior({ 
+          onTouchEnded: function(content) {
+            backScreen();
+          }
+        })
+      }),
       Picture($, {
         left: 90, right: 90, url: "assets/navbarLogo.png", height: 30, active: true,
         behavior: Behavior({
           onTouchEnded: function(content) {
-            changeScreen(titleScreen);
+            switchTitleScreen();
           }
         })
       }),
@@ -96,8 +104,8 @@ export let performanceScreen = new Column({
     ],
 });
 
-let performanceExpandedScreen = new Column({
-    left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
+export let performanceExpandedScreen = new Column({
+    left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin, 
     name: 'performanceExpandedContainer',
     contents: [
         new Navbar(),
@@ -109,9 +117,9 @@ let performanceExpandedScreen = new Column({
 						new Layer({
 							left: 0, right: 0,
 							contents: [
-								new Label({left: 5, string: "Your Performance", style: titleStyle}),
+								new Label({ left: 5, string: "Your Performance", style: titleStyle }),
 								new Picture({
-									right: 5, url: "assets/performance/share.png",
+									right: 5, url: "assets/performance/share.png", active: true,
 									behavior: Behavior({
 										onTouchEnded: function(content) {
 											changeScreen(sharingPerformanceScreen);

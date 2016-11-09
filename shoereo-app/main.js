@@ -19,15 +19,32 @@
 
 import { selectMovesetScreen } from "select-moveset-screen";
 import { selectMarksetScreen } from "select-markset-screen";
-import { performanceScreen, performanceDetailsScreen } from "performance-screen";
+import { performanceScreen, performanceDetailsScreen, performanceExpandedScreen } from "performance-screen";
 import { sharingPerformanceScreen, sharingMovesetScreen } from "sharing-screen";
 
 /* === GLOBAL VARIABLES DECLARATION === */
 
+var screenArray = [];
 var currentScreen;
+
+/* === SCREEN CHANGING FUNCTIONS & BACK BUTTON === */
 export var changeScreen = function(newScreen) {
+	screenArray.push(currentScreen);
 	application.remove(currentScreen);
 	currentScreen = newScreen;
+	application.add(currentScreen);
+}
+
+export var backScreen = function() {
+	application.remove(currentScreen);
+	currentScreen = screenArray.pop();
+	application.add(currentScreen);
+}
+
+export var switchTitleScreen = function() {
+	screenArray = [];
+	application.remove(currentScreen);
+	currentScreen = titleScreen;
 	application.add(currentScreen);
 }
 
@@ -65,6 +82,7 @@ var menuButtonTemplate = Container.template($ => ({
             } else if ($.number == 3) {
 				changeScreen(performanceDetailsScreen);
             } else if ($.number == 4) {
+            	changeScreen(performanceExpandedScreen);
             }
 		}
 	})
