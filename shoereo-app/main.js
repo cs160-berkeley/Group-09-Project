@@ -82,23 +82,34 @@ var settingsButton = new Container({
 	})
 });
 
-var marksetsButton = new menuButtonTemplate({ string: "Marksets", top: 80, number: 1 });
+var marksetsButton = new menuButtonTemplate({ string: "Marksets", top: 100, number: 1 });
 var movesetsButton = new menuButtonTemplate({ string: "Movesets", top: 20, number: 2 });
 var profileButton = new menuButtonTemplate({ string: "Profile", top: 20, number: 3 });
 var friendsButton = new menuButtonTemplate({ string: "Friends", top: 20, number: 4 });
 
 var title = new Picture({
-	top: 80, left: 35,
-	url: "img/title.png"
+	top: 120, left: 35,
+	url: "assets/logo.png"
 });
 
-var titleScreen = new Column({
+var menuBackground = new Picture({
+  top:0, bottom: 0, left: 0, right: 0,
+  url: "assets/menuBackground.png"
+});
+
+var titleScreen = new Layer({
 	top: 0, bottom: 0, left: 0, right: 0,
 	skin: titleBackgroundColor,
 	contents: [
-		title,
-		marksetsButton, movesetsButton, profileButton, friendsButton,
-		settingsButton
+    menuBackground,
+    new Column({
+      top: 0, bottom: 0, left: 0, right: 0,
+    	contents: [
+        title,
+    		marksetsButton, movesetsButton, profileButton, friendsButton,
+    		settingsButton
+      ]
+    }),
 	]
 });
 
@@ -140,7 +151,7 @@ let Navbar = Line.template($ => ({
 let BadPerformanceSection = Layer.template($ => ({
   left: 0, right: 0,
   contents: [
-    new Picture({ left: 0, right: 0, url:"assets/performanceBar.png" }),
+    new Picture({ left: 0, right: 0, url:"assets/performance/performanceBar.png" }),
     new Label({ left: 10, string: $.title, style: thinStyle}),
     new Label({ right: 30, string: $.percent.toString() + "%", style: badPerformanceStyle}),
   ]
@@ -149,16 +160,17 @@ let BadPerformanceSection = Layer.template($ => ({
 let OkayPerformanceSection = Layer.template($ => ({
   left: 0, right: 0,
   contents: [
-    new Picture({ left: 0, right: 0, url:"assets/performanceBar.png" }),
+    new Picture({ left: 0, right: 0, url:"assets/performance/performanceBar.png" }),
     new Label({ left: 10, string: $.title, style: thinStyle}),
     new Label({ right: 30, string: $.percent.toString() + "%", style: okayPerformanceStyle}),
-  ]
+  ],
+
 }));
 
 let GoodPerformanceSection = Layer.template($ => ({
   left: 0, right: 0,
   contents: [
-    new Picture({ left: 0, right: 0, url:"assets/performanceBar.png" }),
+    new Picture({ left: 0, right: 0, url:"assets/performance/performanceBar.png" }),
     new Label({ left: 10, string: $.title, style: thinStyle}),
     new Label({ right: 30, string: $.percent.toString() + "%", style: goodPerformanceStyle}),
   ]
@@ -169,8 +181,8 @@ let performanceScreen = new Column({
     name: 'performanceContainer',
     contents: [
         new Navbar(),
-        new Picture({ left: 0, right: 0, top: 30, url:"assets/performanceTitle.png"}),
-        new Picture({ left: 0, right: 0, top: 15, url:"assets/performanceGraph.png"}),
+        new Picture({ left: 0, right: 0, top: 30, url:"assets/performance/performanceTitle.png"}),
+        new Picture({ left: 0, right: 0, top: 15, url:"assets/performance/performanceGraph.png"}),
         new Column({
           left: 0, right: 0, top: 50, bottom: 0, skin: backgroundSkin,
           contents: [
