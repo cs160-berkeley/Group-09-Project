@@ -7,7 +7,7 @@ import { sharingPerformanceScreen } from "sharing-screen";
 let navbarSkin = new Skin({ fill: "#4F4F4F" });
 let navbarBackStyle = new Style({ font: "bold 30px", color: "#F2F2F2" });
 
-export var Navbar = Line.template($ => ({
+var Navbar = Line.template($ => ({
     left: 0, right: 0, top: 0,
     height: 40,
     skin: navbarSkin,
@@ -83,7 +83,7 @@ export let performanceScreen = new Column({
 							contents: [
 								new Label({left: 5, string: "Your Performance", style: titleStyle}),
 								new Picture({
-									right: 5, url: "assets/performance/share.png",
+									right: 5, url: "assets/performance/share.png", active: true,
 									behavior: Behavior({
 										onTouchEnded: function(content) {
 											changeScreen(sharingPerformanceScreen);

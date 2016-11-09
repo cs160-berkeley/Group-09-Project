@@ -6,7 +6,7 @@ import { changeScreen, backScreen, switchTitleScreen } from "main";
 let navbarSkin = new Skin({ fill: "#4F4F4F" });
 let navbarBackStyle = new Style({ font: "bold 30px", color: "#F2F2F2" });
 
-export var Navbar = Line.template($ => ({
+var Navbar = Line.template($ => ({
     left: 0, right: 0, top: 0,
     height: 40,
     skin: navbarSkin,
