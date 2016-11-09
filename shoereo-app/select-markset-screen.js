@@ -52,7 +52,7 @@ let CreateBar = Layer.template($ => ({
 	left: 30, right: 30,
   contents: [
     new Picture({ left: 0, right: 0, url:"assets/moveset/create.png" }),
-    new Label({ left: 80, string: "Create New Moveset", style: thinStyle})
+    new Label({ left: 80, string: "Create New Markset", style: thinStyle})
   ],
 	behavior: Behavior({
 		onTouchEnded: function(content) {
