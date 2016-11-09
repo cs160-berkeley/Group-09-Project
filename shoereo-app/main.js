@@ -48,9 +48,11 @@ var menuButtonTemplate = Container.template($ => ({
             content.skin = this.upSkin;
             application.remove(currentScreen);
             if ($.number == 1) {
+							currentScreen = selectMarksetScreen;
             } else if ($.number == 2) {
-            	currentScreen = performanceScreen;
+            	currentScreen = selectMovesetScreen;
             } else if ($.number == 3) {
+							currentScreen = performanceDetailsScreen;
             } else if ($.number == 4) {
             }
             application.add(currentScreen);
@@ -116,7 +118,7 @@ var titleScreen = new Layer({
 currentScreen = titleScreen;
 application.add(currentScreen);
 
-/* === PERFORMANCE SCREEN === */
+/* === PAGE TEMPLATES === */
 
 let navbarSkin = new Skin({ fill: "#4F4F4F" });
 let backgroundSkin = new Skin({ fill: "#333333" });
@@ -127,7 +129,6 @@ let thinStyle = new Style({ font: "30px", color: "#56CCF2"});
 let badPerformanceStyle = new Style({ font: "30px", color: "#EB5757"});
 let okayPerformanceStyle = new Style({ font: "30px", color: "#F2994A"});
 let goodPerformanceStyle = new Style({ font: "30px", color: "#27AE60"});
-
 
 let Navbar = Line.template($ => ({
     left: 0, right: 0, top: 0,
@@ -148,13 +149,85 @@ let Navbar = Line.template($ => ({
    	],
 }));
 
+/* === SELECT MOVESET SCREEN === */
+
+let MovesetBar = Container.template($ => ({
+	left: 30, right: 30,
+  contents: [
+    new Picture({ left: 0, right: 0, url:"assets/moveset/friendBar.png" }),
+    new Label({ left: 80, string: $.title, style: thinStyle})
+  ],
+}));
+
+let selectMovesetScreen = new Column({
+    left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
+    name: 'selectMovesetContainer',
+    contents: [
+        new Navbar(),
+        new Picture({ left: 0, right: 0, top: 30, url:"assets/moveset/selectMoveset.png"}),
+        new Column({
+          left: 0, right: 0, top: 50, bottom: 0, skin: backgroundSkin,
+          contents: [
+						new MovesetBar({title: "Dance 1"}),
+						new MovesetBar({title: "Dance 2"}),
+						new MovesetBar({title: "Dance 3"}),
+						new MovesetBar({title: "Dance 4"}),
+						new MovesetBar({title: "Dance 5"}),
+						new MovesetBar({title: "Dance 6"}),
+          ],
+        }),
+    ],
+});
+
+/* === SELECT MARKSET SCREEN === */
+
+let MarksetBar = Layer.template($ => ({
+	left: 30, right: 30,
+  contents: [
+    new Picture({ left: 0, right: 0, url:"assets/moveset/friendBar.png" }),
+    new Label({ left: 80, string: $.title, style: thinStyle})
+  ],
+	behavior: Behavior({
+		onTouchEnded: function(content) {
+				trace("Do something");
+		}
+	})
+}));
+
+let selectMarksetScreen = new Column({
+    left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
+    name: 'selectMarksetContainer',
+    contents: [
+        new Navbar(),
+        new Picture({ left: 0, right: 0, top: 30, url:"assets/moveset/selectMoveset.png"}),
+        new Column({
+          left: 0, right: 0, top: 50, bottom: 0, skin: backgroundSkin,
+          contents: [
+						new MovesetBar({title: "Markset 1"}),
+						new MovesetBar({title: "Markset 2"}),
+						new MovesetBar({title: "Markset 3"}),
+						new MovesetBar({title: "Markset 4"}),
+						new MovesetBar({title: "Markset 5"}),
+						new MovesetBar({title: "Markset 6"}),
+          ],
+        }),
+    ],
+		behavior: Behavior({
+      onTouchEnded: function(content) {
+          trace("Do something");
+			}
+		})
+});
+
+/* === PERFORMANCE SCREEN === */
+
 let BadPerformanceSection = Layer.template($ => ({
   left: 0, right: 0,
   contents: [
     new Picture({ left: 0, right: 0, url:"assets/performance/performanceBar.png" }),
     new Label({ left: 10, string: $.title, style: thinStyle}),
     new Label({ right: 30, string: $.percent.toString() + "%", style: badPerformanceStyle}),
-  ]
+  ],
 }));
 
 let OkayPerformanceSection = Layer.template($ => ({
@@ -164,7 +237,6 @@ let OkayPerformanceSection = Layer.template($ => ({
     new Label({ left: 10, string: $.title, style: thinStyle}),
     new Label({ right: 30, string: $.percent.toString() + "%", style: okayPerformanceStyle}),
   ],
-
 }));
 
 let GoodPerformanceSection = Layer.template($ => ({
@@ -173,7 +245,7 @@ let GoodPerformanceSection = Layer.template($ => ({
     new Picture({ left: 0, right: 0, url:"assets/performance/performanceBar.png" }),
     new Label({ left: 10, string: $.title, style: thinStyle}),
     new Label({ right: 30, string: $.percent.toString() + "%", style: goodPerformanceStyle}),
-  ]
+  ],
 }));
 
 let performanceScreen = new Column({
@@ -186,7 +258,22 @@ let performanceScreen = new Column({
         new Column({
           left: 0, right: 0, top: 50, bottom: 0, skin: backgroundSkin,
           contents: [
-            new Label({left: 5, string: "Your Performance", style: titleStyle}),
+						new Layer({
+							left: 0, right: 0,
+							contents: [
+								new Label({left: 5, string: "Your Performance", style: titleStyle}),
+								new Picture({
+									right: 5, url: "assets/performance/share.png",
+									behavior: Behavior({
+										onTouchEnded: function(content) {
+											application.remove(currentScreen);
+											currentScreen = sharingPerformanceScreen;
+											application.add(currentScreen);
+										}
+									})
+								}),
+							]
+						}),
             new OkayPerformanceSection({title: "Section 1", percent: 67}),
             new GoodPerformanceSection({title: "Section 2", percent: 100}),
             new GoodPerformanceSection({title: "Section 3", percent: 100}),
@@ -196,5 +283,114 @@ let performanceScreen = new Column({
             new GoodPerformanceSection({title: "Section 7", percent: 100}),
           ],
         }),
+    ],
+});
+
+let performanceExpandedScreen = new Column({
+    left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
+    name: 'performanceExpandedContainer',
+    contents: [
+        new Navbar(),
+        new Picture({ left: 0, right: 0, top: 30, url:"assets/performance/performanceTitle.png"}),
+        new Picture({ left: 0, right: 0, top: 15, url:"assets/performance/performanceGraph.png"}),
+        new Column({
+          left: 0, right: 0, top: 50, bottom: 0, skin: backgroundSkin,
+          contents: [
+						new Layer({
+							left: 0, right: 0,
+							contents: [
+								new Label({left: 5, string: "Your Performance", style: titleStyle}),
+								new Picture({
+									right: 5, url: "assets/performance/share.png",
+									behavior: Behavior({
+										onTouchEnded: function(content) {
+											application.remove(currentScreen);
+											currentScreen = sharingPerformanceScreen;
+											application.add(currentScreen);
+										}
+									})
+								}),
+							]
+						}),
+            new OkayPerformanceSection({title: "Section 1", percent: 67}),
+						new Layer({
+							contents: [
+								new Picture({left: 0, right: 0, url: "assets/performance/details.png"}),
+								new Column({
+									right: 0,
+									contents: [
+										new Picture({right: 0, url: "assets/performance/badExpand.png"}),
+										new Picture({right: 0, url: "assets/performance/goodExpand.png"}),
+										new Picture({right: 0, url: "assets/performance/goodExpand.png"}),
+									]
+								})
+							]
+						}),
+            new GoodPerformanceSection({title: "Section 2", percent: 100}),
+            new GoodPerformanceSection({title: "Section 3", percent: 100}),
+            new GoodPerformanceSection({title: "Section 4", percent: 100}),
+            new GoodPerformanceSection({title: "Section 5", percent: 100}),
+            new BadPerformanceSection({title: "Section 6", percent: 30}),
+            new GoodPerformanceSection({title: "Section 7", percent: 100}),
+          ],
+        }),
+    ],
+});
+
+// TODO: Change Original and My Steps to check/uncheck. Images exist
+let performanceDetailsScreen = new Column({
+    left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
+    name: 'performanceDetailsContainer',
+    contents: [
+        new Navbar(),
+				new Layer({
+					left: 20, right: 20, top: 20,
+					contents: [
+						new Picture({ left: 0, url:"assets/performance/details/step.png"}),
+		        new Picture({ right: 0, url:"assets/performance/details/section.png"}),
+					]
+				}),
+        new Layer({
+          left: 0, right: 0, top: 30, bottom: 0,
+          contents: [
+						new Picture({ top: 20, bottom: 50, right: 0, left: 0, url:"assets/performance/details/actualSteps.png"}),
+						new Picture({ top: 120, bottom: 100, url:"assets/performance/details/arrow.png"}),
+						new Picture({ top: 20, bottom: 50, right: 0, left: 0, url:"assets/performance/details/resultSteps.png"}),
+          ],
+        }),
+				new Line({
+					contents: [
+						new Picture({ left: 0, url:"assets/performance/details/actualChecked.png"}),
+		        new Picture({ right: 0, url:"assets/performance/details/resultChecked.png"}),
+					]
+				})
+    ],
+});
+
+/* === SHARING SCREENS === */
+
+let sharingPerformanceScreen = new Column({
+    left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
+    name: 'sharingPerformanceContainer',
+    contents: [
+        new Navbar(),
+        new Picture({ left: 0, right: 0, top: 30, url:"assets/social/title.png"}),
+        new Picture({ left: 0, right: 0, top: 15, url:"assets/social/performance.png"}),
+				new Picture({ left: 0, right: 0, top: 30, url:"assets/social/friends.png"}),
+				new Picture({ left: 0, right: 0, top: 30, url:"assets/social/team.png"}),
+				new Picture({ left: 0, right: 0, top: 50, url:"assets/social/socialMedia.png"}),
+    ],
+});
+
+let sharingMovesetScreen = new Column({
+    left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
+    name: 'sharingMovesetContainer',
+    contents: [
+        new Navbar(),
+        new Picture({ left: 0, right: 0, top: 30, url:"assets/social/title.png"}),
+        new Picture({ left: 0, right: 0, top: 15, url:"assets/social/movesetTitle.png"}),
+				new Picture({ left: 0, right: 0, top: 30, url:"assets/social/friends.png"}),
+				new Picture({ left: 0, right: 0, top: 30, url:"assets/social/team.png"}),
+				new Picture({ left: 0, right: 0, top: 50, url:"assets/social/socialMedia.png"}),
     ],
 });
