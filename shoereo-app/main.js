@@ -15,9 +15,13 @@
  *     limitations under the License.
  */
 
+/* == GLOBAL VARIABLES DECLARATION === */
+
+var currentScreen;
+
 /* === TITLE SCREEN === */
 
-var backgroundColor = new Skin({ fill: "#BFBFBF" });
+var titleBackgroundColor = new Skin({ fill: "#BFBFBF" });
 
 var menuButtonTextStyle = new Style({ font: "bold 36px", color: "white" });
 
@@ -42,6 +46,14 @@ var menuButtonTemplate = Container.template($ => ({
         },
         onTouchEnded: function(content) {
             content.skin = this.upSkin;
+            application.remove(currentScreen);
+            if ($.number == 1) {            	
+            } else if ($.number == 2) {
+            	currentScreen = performanceScreen;
+            } else if ($.number == 3) {
+            } else if ($.number == 4) {
+            }
+            application.add(currentScreen);
 		}
 	})
 }));
@@ -70,10 +82,10 @@ var settingsButton = new Container({
 	})
 });
 
-var marksetsButton = new menuButtonTemplate({ string: "Marksets", top: 80 });
-var movesetsButton = new menuButtonTemplate({ string: "Movesets", top: 20 });
-var profileButton = new menuButtonTemplate({ string: "Profile", top: 20 });
-var friendsButton = new menuButtonTemplate({ string: "Friends", top: 20 });
+var marksetsButton = new menuButtonTemplate({ string: "Marksets", top: 80, number: 1 });
+var movesetsButton = new menuButtonTemplate({ string: "Movesets", top: 20, number: 2 });
+var profileButton = new menuButtonTemplate({ string: "Profile", top: 20, number: 3 });
+var friendsButton = new menuButtonTemplate({ string: "Friends", top: 20, number: 4 });
 
 var title = new Picture({
 	top: 80, left: 35,
@@ -82,7 +94,7 @@ var title = new Picture({
 
 var titleScreen = new Column({
 	top: 0, bottom: 0, left: 0, right: 0,
-	skin: backgroundColor,
+	skin: titleBackgroundColor,
 	contents: [
 		title,
 		marksetsButton, movesetsButton, profileButton, friendsButton,
@@ -90,4 +102,38 @@ var titleScreen = new Column({
 	]
 });
 
-application.add(titleScreen);
+currentScreen = titleScreen;
+application.add(currentScreen);
+
+/* === PERFORMANCE SCREEN === */
+
+let navbarSkin = new Skin({ fill: "#4F4F4F" });
+let backgroundSkin = new Skin({ fill: "#333333" });
+let navbarBackStyle = new Style({ font: "bold 30px", color: "#F2F2F2" })
+
+let Navbar = Line.template($ => ({
+    left: 0, right: 0, top: 0,
+    height: 40,
+    skin: navbarSkin,
+    contents: [
+    	Label($, {left:5, top: 5, bottom: 5, string: "<", style: navbarBackStyle}),
+    	Picture($, {
+     		left: 90, right: 90, url: "assets/navbarLogo.png", height: 30, active: true,
+     		behavior: Behavior({
+     			onTouchEnded: function(content) {
+     				application.remove(currentScreen);
+     				currentScreen = titleScreen;
+     				application.add(currentScreen);
+     			}
+     		})
+     	}),
+   	],
+}));
+
+let performanceScreen = new Column({
+    left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
+    name: 'performanceContainer',
+    contents: [
+        new Navbar()
+    ]
+});
