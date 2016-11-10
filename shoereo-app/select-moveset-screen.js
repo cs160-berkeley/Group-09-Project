@@ -45,13 +45,13 @@ let MovesetBar = Container.template($ => ({
   ],
   behavior: Behavior({
     onTouchEnded: function(content) {
-      changeScreen(performanceScreen);
+      changeScreen(viewMovesetScreen);
     }
   })
 }));
 
 let CreateBar = Layer.template($ => ({
-	left: 30, right: 30, active: true, 
+	left: 30, right: 30, active: true,
   contents: [
     new Picture({ left: 0, right: 0, url:"assets/moveset/create.png" }),
     new Label({ left: 80, string: "Create Moveset", style: thinStyle})
@@ -81,5 +81,37 @@ export let selectMovesetScreen = new Column({
 						new MovesetBar({title: "Dance 6"}),
           ],
         }),
+    ],
+});
+
+/* === VIEW MOVESET SCREEN === */
+
+let startDancingBar = Layer.template($ => ({
+	left: 30, right: 30, top: 10, active: true,
+  contents: [
+    new Picture({ left: 0, right: 0, url:"assets/moveset/startDancing.png" }),
+  ],
+	behavior: Behavior({
+		onTouchEnded: function(content) {
+				changeScreen(performanceScreen);
+		}
+	})
+}));
+
+export let viewMovesetScreen = new Column({
+    left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
+    name: 'viewMovesetContainer',
+    contents: [
+        new Navbar(),
+        new Picture({ left: 0, right: 0, top: 30, url:"assets/moveset/movesetTitle.png"}),
+        new Layer({ left: 0, right: 0, top: 60,
+          contents: [
+            new Picture({ left: 40, url:"assets/moveset/music.png"}),
+            new Picture({ right: 60, url:"assets/moveset/time.png"}),
+          ]
+        }),
+        new Picture({ left: 0, right: 0, top: 60, url:"assets/moveset/movePreview.png"}),
+        new Picture({ left: 0, right: 0, top: 30, url:"assets/moveset/score.png"}),
+        new startDancingBar(),
     ],
 });
