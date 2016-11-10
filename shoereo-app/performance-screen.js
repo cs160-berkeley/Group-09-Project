@@ -51,12 +51,17 @@ let BadPerformanceSection = Layer.template($ => ({
 }));
 
 let OkayPerformanceSection = Layer.template($ => ({
-  left: 0, right: 0,
+  left: 0, right: 0, active: true,
   contents: [
     new Picture({ left: 0, right: 0, url:"assets/performance/performanceBar.png" }),
     new Label({ left: 10, string: $.title, style: thinStyle}),
     new Label({ right: 30, string: $.percent.toString() + "%", style: okayPerformanceStyle}),
   ],
+  behavior: Behavior({
+    onTouchEnded: function(content) {
+      changeScreen(performanceExpandedScreen);
+    }
+  })
 }));
 
 let GoodPerformanceSection = Layer.template($ => ({
@@ -135,7 +140,14 @@ export let performanceExpandedScreen = new Column({
 								new Column({
 									right: 0,
 									contents: [
-										new Picture({right: 0, url: "assets/performance/badExpand.png"}),
+										new Picture({
+                      right: 0, url: "assets/performance/badExpand.png", active: true,
+                      behavior: Behavior({
+                        onTouchEnded: function(picture) {
+                          changeScreen(performanceDetailsScreen);
+                        }
+                      })
+                    }),
 										new Picture({right: 0, url: "assets/performance/goodExpand.png"}),
 										new Picture({right: 0, url: "assets/performance/goodExpand.png"}),
 									]
