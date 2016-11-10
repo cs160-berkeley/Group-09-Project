@@ -38,7 +38,7 @@ let thinStyle = new Style({ font: "25px", color: "#56CCF2"});
 let MarksetBar = Layer.template($ => ({
 	left: 30, right: 30,
   contents: [
-    new Picture({ left: 0, right: 0, url:"assets/moveset/friendBar.png" }),
+    new Picture({ left: 0, right: 0, url:"assets/markset/friendBar.png" }),
     new Label({ left: 80, string: $.title, style: thinStyle})
   ],
 	behavior: Behavior({
@@ -51,7 +51,7 @@ let MarksetBar = Layer.template($ => ({
 let CreateBar = Layer.template($ => ({
 	left: 30, right: 30,
   contents: [
-    new Picture({ left: 0, right: 0, url:"assets/moveset/create.png" }),
+    new Picture({ left: 0, right: 0, url:"assets/markset/create.png" }),
     new Label({ left: 80, string: "Create New Markset", style: thinStyle})
   ],
 	behavior: Behavior({
@@ -66,7 +66,7 @@ export let selectMarksetScreen = new Column({
     name: 'selectMarksetContainer',
     contents: [
         new Navbar(),
-        new Picture({ left: 0, right: 0, top: 30, url:"assets/moveset/selectMoveset.png"}),
+        new Picture({ left: 0, right: 0, top: 30, url:"assets/markset/selectMarkset.png"}),
         new Column({
           left: 0, right: 0, top: 50, bottom: 0, skin: backgroundSkin,
           contents: [
