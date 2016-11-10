@@ -1,5 +1,6 @@
 /* === IMPORT STATEMENTS === */
 import { changeScreen, backScreen, switchTitleScreen } from "main";
+import { newMarksetScreen } from "new-markset-screen";
 
 /* === NAVBAR === */
 
@@ -56,7 +57,7 @@ let CreateBar = Layer.template($ => ({
   ],
 	behavior: Behavior({
 		onTouchEnded: function(content) {
-				trace("Do something");
+				changeScreen(newMarksetScreen);
 		}
 	})
 }));

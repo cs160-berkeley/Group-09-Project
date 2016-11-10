@@ -2,6 +2,8 @@
 import { changeScreen, backScreen, switchTitleScreen } from "main";
 import { sharingMovesetScreen } from "sharing-screen";
 
+import Pins from "pins";
+
 /* === NAVBAR === */
 
 let navbarSkin = new Skin({ fill: "#4F4F4F" });
@@ -77,12 +79,14 @@ let MyField = Container.template($ => ({
     ]
 }));
 
-
-let movesetStyle = new Style({font: "bold 40px", color: "#56CCF2"})
-let whiteStyle = new Style({font: "bold 24px", color: "white"})
+let movesetStyle = new Style({font: "bold 40px", color: "#56CCF2"});
+let whiteStyle = new Style({font: "bold 24px", color: "white"});
 let greenSkin = new Skin({ fill: "#19F777" });
-let bluetoothStyle = new Style({font: "bold 18px", color: "#828282"})
-let textStyle = new Style({font: "bold 18px", color: "gray"})
+let bluetoothStyle = new Style({font: "bold 18px", color: "#828282"});
+let textStyle = new Style({font: "bold 18px", color: "gray"});
+let whiteStyle2 = new Style({font: "bold 18px", color: "white"});
+let yellowSkin = new Skin({ fill: "#FFFF00" });
+let redSkin = new Skin({ fill: "#EB5757" });
 
 //Title
 let StringPane = new Label({
@@ -160,6 +164,47 @@ var recordButtonTemplate = Container.template($ => ({
     }
   })
 }));
+
+let remotePins;
+class AppBehavior extends Behavior {
+    onLaunch(application) {
+        let discoveryInstance = Pins.discover(
+            connectionDesc => {
+                if (connectionDesc.name == "pins-share") {
+                    trace("Connecting to remote pins\n");
+                    remotePins = Pins.connect(connectionDesc);
+		        	remotePins.repeat("/connectme/read", 50, result => {
+		        		if (result == 0){
+							StringPane3.string = "Not Connected";
+							StringPane3.style = whiteStyle2;
+							bluetoothButton.skin = redSkin;	
+		        		}
+		        		else if (result < 0.3){
+		        			StringPane3.string = "Weak Signal";
+		        			StringPane3.style = textStyle;
+		        			bluetoothButton.skin = yellowSkin;
+		        		
+		        		}
+		        		else{
+		        			StringPane3.string = "Shoes Connected!";
+		        			StringPane3.style = textStyle;
+		        			bluetoothButton.skin = greenSkin;
+		        		}
+		        		
+		        	});
+		        	
+                }
+            }, 
+            connectionDesc => {
+                if (connectionDesc.name == "pins-share") {
+                    trace("Disconnected from remote pins\n");
+                    remotePins = undefined;
+                }
+            }
+        );
+    }
+}
+application.behavior = new AppBehavior();
 
 var startButton = new recordButtonTemplate({ string: "Start Dancing", top: 20});
 
