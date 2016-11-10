@@ -1,5 +1,5 @@
 /* === IMPORT STATEMENTS === */
-import { changeScreen, backScreen, switchTitleScreen } from "main";
+import { changeScreen, backScreen, switchTitleScreen, distribute } from "main";
 import { sharingPerformanceScreen } from "sharing-screen";
 
 /* === NAVBAR === */
@@ -165,6 +165,9 @@ export let performanceExpandedScreen = new Column({
     ],
 });
 
+var actualChecked = true;
+var resultChecked = true;
+
 // TODO: Change Original and My Steps to check/uncheck. Images exist
 export let performanceDetailsScreen = new Column({
     left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
@@ -181,15 +184,61 @@ export let performanceDetailsScreen = new Column({
         new Layer({
           left: 0, right: 0, top: 30, bottom: 0,
           contents: [
-						new Picture({ top: 20, bottom: 50, right: 0, left: 0, url:"assets/performance/details/actualSteps.png"}),
+						new Picture({ top: 20, bottom: 50, right: 0, left: 0, url:"assets/performance/details/actualSteps.png",
+              behavior: Behavior({
+                updateActualSteps: function(picture, checked) {
+                  if (checked) {
+                    picture.url = "assets/performance/details/actualSteps.png";
+                  } else {
+                    picture.url = "";
+                  }
+                }
+              })
+            }),
 						new Picture({ top: 120, bottom: 100, url:"assets/performance/details/arrow.png"}),
-						new Picture({ top: 20, bottom: 50, right: 0, left: 0, url:"assets/performance/details/resultSteps.png"}),
+						new Picture({ top: 20, bottom: 50, right: 0, left: 0, url:"assets/performance/details/resultSteps.png",
+              behavior: Behavior({
+                updateResultSteps: function(picture, checked) {
+                  if (checked) {
+                    picture.url = "assets/performance/details/resultSteps.png";
+                  } else {
+                    picture.url = "";
+                  }
+                }
+              })
+            }),
           ],
         }),
 				new Line({
 					contents: [
-						new Picture({ left: 0, url:"assets/performance/details/actualChecked.png"}),
-		        new Picture({ right: 0, url:"assets/performance/details/resultChecked.png"}),
+						new Picture({ left: 0, active: true, url:"assets/performance/details/actualChecked.png",
+              behavior: Behavior({
+                onTouchEnded: function(picture) {
+                  if (actualChecked) {
+                    picture.url = "assets/performance/details/actualUnchecked.png";
+                    actualChecked = false;  
+                  } else {
+                    picture.url = "assets/performance/details/actualChecked.png";
+                    actualChecked = true;  
+                  }
+                  distribute("updateActualSteps", actualChecked);
+                }
+              })
+          }),
+		        new Picture({ right: 0, active: true, url:"assets/performance/details/resultChecked.png",
+              behavior: Behavior({
+                onTouchEnded: function(picture) {
+                  if (resultChecked) {
+                    picture.url = "assets/performance/details/resultUnchecked.png";
+                    resultChecked = false;  
+                  } else {
+                    picture.url = "assets/performance/details/resultChecked.png";
+                    resultChecked = true;  
+                  }
+                  distribute("updateResultSteps", resultChecked);
+                }
+              })
+          }),
 					]
 				})
     ],
