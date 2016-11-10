@@ -50,7 +50,7 @@ let MarksetBar = Layer.template($ => ({
 }));
 
 let CreateBar = Layer.template($ => ({
-	left: 30, right: 30,
+	left: 30, right: 30, active: true,
   contents: [
     new Picture({ left: 0, right: 0, url:"assets/markset/create.png" }),
     new Label({ left: 80, string: "Create Markset", style: thinStyle})

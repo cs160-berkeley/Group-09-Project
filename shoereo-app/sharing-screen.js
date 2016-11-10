@@ -40,7 +40,7 @@ let ShareColumn = Column.template($ => ({
     new Picture({ left: 0, right: 0, top: 30, active: true, url:"assets/social/friends.png",
       behavior: Behavior({
         onTouchEnded: function(content) {
-          // Switch to sharingFriendsScreen
+          changeScreen(sharingFriendsScreen);
         }
       })
     }),
