@@ -13,7 +13,7 @@ var Navbar = Line.template($ => ({
     contents: [
       Label($, {
         left: 5, top: 5, bottom: 5, active: true, string: "<", style: navbarBackStyle,
-        behavior: Behavior({ 
+        behavior: Behavior({
           onTouchEnded: function(content) {
             backScreen();
           }
@@ -57,5 +57,21 @@ export let sharingMovesetScreen = new Column({
 				new Picture({ left: 0, right: 0, top: 30, url:"assets/social/friends.png"}),
 				new Picture({ left: 0, right: 0, top: 30, url:"assets/social/team.png"}),
 				new Picture({ left: 0, right: 0, top: 50, url:"assets/social/socialMedia.png"}),
+    ],
+});
+
+export let sharingFriendsScreen = new Column({
+    left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
+    name: 'sharingFriendsContainer',
+    contents: [
+        new Navbar(),
+        new Picture({ left: 0, right: 0, top: 30, url:"assets/social/selectFriends.png"}),
+        new Picture({ left: 0, right: 0, top: 30, url:"assets/social/friendBar.png"}),
+        new Picture({ left: 0, right: 0, top: 0, url:"assets/social/friendBar.png"}),
+        new Picture({ left: 0, right: 0, top: 0, url:"assets/social/friendBar.png"}),
+        new Picture({ left: 0, right: 0, top: 0, url:"assets/social/friendBar.png"}),
+        new Picture({ left: 0, right: 0, top: 0, url:"assets/social/friendBar.png"}),
+        new Picture({ left: 0, right: 0, top: 0, url:"assets/social/friendBar.png"}),
+        new Picture({ left: 0, right: 0, top: 0, url:"assets/social/friendBar.png"}),
     ],
 });
