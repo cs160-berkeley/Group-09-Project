@@ -1,5 +1,5 @@
 /* === IMPORT STATEMENTS === */
-import { changeScreen } from "main";
+import { changeScreen, switchTitleScreen } from "main";
 import { Navbar } from "navbar";
 
 /* === SHARING SCREENS === */
@@ -39,7 +39,7 @@ export let sharingMovesetScreen = new Column({
         new Navbar(),
         new Picture({ left: 0, right: 0, top: 30, url:"assets/social/title.png"}),
         new Picture({ left: 0, right: 0, top: 15, url:"assets/social/movesetTitle.png"}),
-				new ShareColumn(),
+		new ShareColumn(),
     ],
 });
 

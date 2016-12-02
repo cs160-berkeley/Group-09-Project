@@ -1,4 +1,7 @@
+/* === IMPORT STATEMENTS === */
 import { backScreen, switchTitleScreen } from "main";
+
+/* === NAVBAR === */
 
 let navbarSkin = new Skin({ fill: "#4F4F4F" });
 let navbarBackStyle = new Style({ font: "bold 30px", color: "#F2F2F2" });
