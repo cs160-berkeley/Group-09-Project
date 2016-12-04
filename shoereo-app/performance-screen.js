@@ -7,8 +7,8 @@ import { Navbar } from "navbar";
 
 let backgroundSkin = new Skin({ fill: "#333333" });
 
-let titleStyle = new Style({ font: "bold 30px", color: "#56CCF2"});
-let thinStyle = new Style({ font: "30px", color: "#56CCF2"});
+let titleStyle = new Style({ font: "bold 30px", color: "#F2F2F2"});
+let thinStyle = new Style({ font: "30px", color: "#F2F2F2"});
 let badPerformanceStyle = new Style({ font: "30px", color: "#EB5757"});
 let okayPerformanceStyle = new Style({ font: "30px", color: "#F2994A"});
 let goodPerformanceStyle = new Style({ font: "30px", color: "#27AE60"});
@@ -82,7 +82,7 @@ export let performanceScreen = new Column({
 });
 
 export let performanceExpandedScreen = new Column({
-    left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin, 
+    left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
     name: 'performanceExpandedContainer',
     contents: [
         new Navbar(),
@@ -188,10 +188,10 @@ export let performanceDetailsScreen = new Column({
                 onTouchEnded: function(picture) {
                   if (actualChecked) {
                     picture.url = "assets/performance/details/actualUnchecked.png";
-                    actualChecked = false;  
+                    actualChecked = false;
                   } else {
                     picture.url = "assets/performance/details/actualChecked.png";
-                    actualChecked = true;  
+                    actualChecked = true;
                   }
                   distribute("updateActualSteps", actualChecked);
                 }
@@ -202,10 +202,10 @@ export let performanceDetailsScreen = new Column({
                 onTouchEnded: function(picture) {
                   if (resultChecked) {
                     picture.url = "assets/performance/details/resultUnchecked.png";
-                    resultChecked = false;  
+                    resultChecked = false;
                   } else {
                     picture.url = "assets/performance/details/resultChecked.png";
-                    resultChecked = true;  
+                    resultChecked = true;
                   }
                   distribute("updateResultSteps", resultChecked);
                 }
