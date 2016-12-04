@@ -6,7 +6,7 @@ import { backScreen, switchTitleScreen } from "main";
 let navbarSkin = new Skin({ fill: "#333333" });
 let navbarBackStyle = new Style({ font: "30px", color: "#FFFFFF" });
 
-export var Navba1r = Line.template($ => ({
+export var Navbar = Line.template($ => ({
     left: 0, right: 0, top: 0,
     height: 40,
     skin: navbarSkin,
@@ -62,14 +62,14 @@ export var NavbarDelete = Line.template($ => ({
     ],
 }));
 
-export var Navbar = Line.template($ => ({
+export var NavbarDeleteShare = Line.template($ => ({
     left: 0, right: 0, top: 0,
     height: 40,
     skin: navbarSkin,
     contents: [
       Label($, {
         left: 5, top: 5, bottom: 5, active: true, string: "<", style: navbarBackStyle,
-        behavior: Behavior({ 
+        behavior: Behavior({
           onTouchEnded: function(content) {
             backScreen();
           }
