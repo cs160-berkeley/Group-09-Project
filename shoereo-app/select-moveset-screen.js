@@ -36,24 +36,33 @@ let CreateBar = Layer.template($ => ({
 	})
 }));
 
-export let selectMovesetScreen = new Column({
+export let selectMovesetScreen = new Layer({
     left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
     name: 'selectMovesetContainer',
     contents: [
-        new Navbar(),
-        new Picture({ left: 0, right: 0, top: 30, url:"assets/moveset/selectMoveset.png"}),
-        new Column({
-          left: 0, right: 0, top: 50, bottom: 0, skin: backgroundSkin,
-          contents: [
-            new CreateBar(),
-						new MovesetBar({title: "Dance 1"}),
-						new MovesetBar({title: "Dance 2"}),
-						new MovesetBar({title: "Dance 3"}),
-						new MovesetBar({title: "Dance 4"}),
-						new MovesetBar({title: "Dance 5"}),
-						new MovesetBar({title: "Dance 6"}),
-          ],
-        }),
+			new Picture({
+        top: 0, bottom: 0, right: 0, left: 0,
+        url: "assets/menuBackground.png"
+      }),
+      new Column({
+        top: 0, bottom: 0, right: 0, left: 0,
+        contents: [
+	        new Navbar(),
+	        new Picture({ left: 0, right: 0, top: 30, url:"assets/moveset/selectMoveset.png"}),
+	        new Column({
+	          left: 0, right: 0, top: 50, bottom: 0,
+	          contents: [
+	            new CreateBar(),
+							new MovesetBar({title: "Dance 1"}),
+							new MovesetBar({title: "Dance 2"}),
+							new MovesetBar({title: "Dance 3"}),
+							new MovesetBar({title: "Dance 4"}),
+							new MovesetBar({title: "Dance 5"}),
+							new MovesetBar({title: "Dance 6"}),
+	          ],
+	        }),
+				]
+			})
     ],
 });
 
@@ -83,19 +92,28 @@ let startDancingBar = Layer.template($ => ({
 	})
 }));
 
-export let viewMovesetScreen = new Column({
+export let viewMovesetScreen = new Layer({
     left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
     name: 'viewMovesetContainer',
     contents: [
-        new Navbar(),
-        new Picture({ left: 0, right: 0, top: 60, url:"assets/moveset/movesetTitle.png"}),
-        new Column({ left: 0, right: 0, top: 100,
-          contents: [
-            new Picture({ left: 80, url:"assets/moveset/music.png"}),
-            new Picture({ left: 85, top: 20, url:"assets/moveset/time.png"}),
-          ]
-        }),
-				new shareDanceBar(),
-        new startDancingBar(),
+			new Picture({
+        top: 0, bottom: 0, right: 0, left: 0,
+        url: "assets/menuBackground.png"
+      }),
+      new Column({
+        top: 0, bottom: 0, right: 0, left: 0,
+        contents: [
+	        new Navbar(),
+	        new Picture({ left: 0, right: 0, top: 60, url:"assets/moveset/movesetTitle.png"}),
+	        new Column({ left: 0, right: 0, top: 100,
+	          contents: [
+	            new Picture({ left: 80, url:"assets/moveset/music.png"}),
+	            new Picture({ left: 85, top: 20, url:"assets/moveset/time.png"}),
+	          ]
+	        }),
+					new shareDanceBar(),
+	        new startDancingBar(),
+				]
+			})
     ],
 });
