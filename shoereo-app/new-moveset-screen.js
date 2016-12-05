@@ -56,8 +56,8 @@ let greenSkin = new Skin({ fill: "#27AE60" });
 let bluetoothStyle = new Style({font: "bold 18px", color: "#828282"});
 let textStyle = new Style({font: "bold 18px", color: "gray"});
 let whiteStyle2 = new Style({font: "bold 18px", color: "white"});
-let yellowSkin = new Skin({ fill: "#FFFF00" });
-let redSkin = new Skin({ fill: "#EB5757" });
+let yellowSkin = new Skin({ fill: "#E2BC49" });
+let redSkin = new Skin({ fill: "#DC2241" });
 
 //Title
 var title = new Picture({
@@ -79,7 +79,6 @@ let StringPane3 = new Label({
 });
 
 //Music
-
 var music = new Picture({
  	top: 10,
  	url: "assets/moveset/selectMusic.png",
@@ -143,7 +142,7 @@ class AppBehavior extends Behavior {
 		        		}
 		        		else{
 		        			StringPane3.string = "Shoes Connected!";
-		        			StringPane3.style = textStyle;
+		        			StringPane3.style = whiteStyle2;
 		        			bluetoothButton.skin = greenSkin;
 		        		}
 		        		
@@ -184,8 +183,7 @@ export let newMovesetScreen = new Layer({
 	        new MyField({name: ""}),
 	        music,
 	        bluetoothButton,
-	        startButton  
+	        startButton,  
 	    ],
 	}),
 	],});
-
