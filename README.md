@@ -1,10 +1,14 @@
-# Group 09 Project
+# Group 09 Project (Shoereo)
 
 # Team Members
 Anna Kang
+
 Andrew Zhao
+
 Daniel Kim
+
 Sophie Zeng
+
 Victor Lu
 
 # Description
