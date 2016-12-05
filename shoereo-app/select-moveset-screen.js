@@ -2,6 +2,7 @@
 import { changeScreen } from "main";
 import { newMovesetScreen } from "new-moveset-screen";
 import { performanceScreen } from "performance-screen";
+import { sharingMovesetScreen } from "sharing-screen";
 import { Navbar } from "navbar";
 
 /* === SELECT MOVESET SCREEN === */
@@ -58,8 +59,20 @@ export let selectMovesetScreen = new Column({
 
 /* === VIEW MOVESET SCREEN === */
 
-let startDancingBar = Layer.template($ => ({
+let shareDanceBar = Layer.template($ => ({
 	left: 30, right: 30, top: 100, active: true,
+  contents: [
+    new Picture({ left: 0, right: 0, url:"assets/moveset/share.png" }),
+  ],
+	behavior: Behavior({
+		onTouchEnded: function(content) {
+				changeScreen(sharingMovesetScreen);
+		}
+	})
+}));
+
+let startDancingBar = Layer.template($ => ({
+	left: 30, right: 30, top: 30, active: true,
   contents: [
     new Picture({ left: 0, right: 0, url:"assets/moveset/startDancing.png" }),
   ],
@@ -82,6 +95,7 @@ export let viewMovesetScreen = new Column({
             new Picture({ left: 85, top: 20, url:"assets/moveset/time.png"}),
           ]
         }),
+				new shareDanceBar(),
         new startDancingBar(),
     ],
 });

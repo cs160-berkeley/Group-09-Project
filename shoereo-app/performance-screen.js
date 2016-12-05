@@ -1,5 +1,5 @@
 /* === IMPORT STATEMENTS === */
-import { changeScreen, distribute } from "main";
+import { backScreen, changeScreen, distribute } from "main";
 import { sharingPerformanceScreen } from "sharing-screen";
 import { Navbar } from "navbar";
 
@@ -32,6 +32,20 @@ let OkayPerformanceSection = Layer.template($ => ({
   behavior: Behavior({
     onTouchEnded: function(content) {
       changeScreen(performanceExpandedScreen);
+    }
+  })
+}));
+
+let OkayPerformanceSectionExpanded = Layer.template($ => ({
+  left: 0, right: 0, active: true,
+  contents: [
+    new Picture({ left: 0, right: 0, url:"assets/performance/performanceBarExpanded.png" }),
+    new Label({ left: 10, string: $.title, style: thinStyle}),
+    new Label({ right: 30, string: $.percent.toString() + "%", style: okayPerformanceStyle}),
+  ],
+  behavior: Behavior({
+    onTouchEnded: function(content) {
+      backScreen();
     }
   })
 }));
@@ -105,12 +119,12 @@ export let performanceExpandedScreen = new Column({
 								}),
 							]
 						}),
-            new OkayPerformanceSection({title: "Section 1", percent: 67}),
+            new OkayPerformanceSectionExpanded({title: "Section 1", percent: 67}),
 						new Layer({
 							contents: [
-								new Picture({left: 0, right: 0, url: "assets/performance/details.png"}),
+								new Picture({left: 0, right: 0, top: 0, url: "assets/performance/details.png"}),
 								new Column({
-									right: 0,
+									right: 0, top: 0,
 									contents: [
 										new Picture({
                       right: 0, url: "assets/performance/badExpand.png", active: true,
