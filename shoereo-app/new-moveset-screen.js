@@ -23,7 +23,7 @@ let whiteSkin = new Skin({ fill: "white" });
 let fieldLabelSkin = new Skin({ fill: ['transparent', 'transparent', '#C0C0C0', '#acd473'] });
 
 let MyField = Container.template($ => ({ 
-    width: 250, height: 36, top: 25, skin: nameInputSkin, contents: [
+    width: 250, height: 36, top: 75, skin: nameInputSkin, contents: [
         Scroller($, { 
             left: 4, right: 4, top: 4, bottom: 4, active: true, 
             Behavior: FieldScrollerBehavior, clip: true, 
@@ -43,7 +43,7 @@ let MyField = Container.template($ => ({
                 }),
                 Label($, {
                     left: 4, right: 4, top: 4, bottom: 4, style: fieldHintStyle,
-                    string: "Tap to add title...", name: "hint"
+                    string: "Insert Title Here", name: "hint"
                 }),
             ]
         })
@@ -52,7 +52,7 @@ let MyField = Container.template($ => ({
 
 let movesetStyle = new Style({font: "bold 40px", color: "#56CCF2"});
 let whiteStyle = new Style({font: "bold 24px", color: "white"});
-let greenSkin = new Skin({ fill: "#19F777" });
+let greenSkin = new Skin({ fill: "#27AE60" });
 let bluetoothStyle = new Style({font: "bold 18px", color: "#828282"});
 let textStyle = new Style({font: "bold 18px", color: "gray"});
 let whiteStyle2 = new Style({font: "bold 18px", color: "white"});
@@ -60,60 +60,48 @@ let yellowSkin = new Skin({ fill: "#FFFF00" });
 let redSkin = new Skin({ fill: "#EB5757" });
 
 //Title
-let StringPane = new Label({
-    left: 0, right: 0, top: 25,
-    style: movesetStyle,
-    string: "New MoveSet",
+var title = new Picture({
+ 	top: 75,
+ 	url: "assets/moveset/newMoveset.png",
 });
 
 //Record Button
-let StringPane2 = new Label({
-    left: 0, right: 0,
-    style: whiteStyle,
-    string: "Start Dancing",
+var buttonPane = new Picture({
+ 	top: 10,
+ 	url: "assets/moveset/startDancing.png",
 });
 
 //Bluetooth
 let StringPane3 = new Label({
     left: 0, right: 0,
-    style: bluetoothStyle,
+    style: whiteStyle2,
     string: "Shoes Connected!",
 });
 
 //Music
-let StringPane4 = new Label({
-    left: 55,
-    style: textStyle,
-    string: "Select Music",
+
+var music = new Picture({
+ 	top: 10,
+ 	url: "assets/moveset/selectMusic.png",
 });
 
-let bluetoothButton = new Container({height: 40, width: 250, top: 25, skin: greenSkin, 
+let bluetoothButton = new Container({height: 40, width: 250, top: 175, skin: greenSkin, 
   contents: [
     new Picture({left: 5, height: 30, width: 30, url: "img/bluetooth.png", active: true,}),
     StringPane3,
   ]
 });
 
-let musicButton = new Container({
-  height: 40, width: 250, top: 25, skin: whiteSkin, 
-  contents: [
-    new Picture({left: 5, height: 30, width: 30, url: "img/musicnote.png", active: true,}),
-    StringPane4,
-  ]
-});
+
 
 var recordButtonTemplate = Container.template($ => ({
   top: $.top, left: ((375 - 250)/2), width: 250, height: 80, active: true, 
   contents: [
-    StringPane2,
+    buttonPane,
   ],
   behavior: Behavior({
     onCreate: function(content) {
-            this.startSkin = new Skin({ fill: "#1CCD67" });
-            this.stopSkin = new Skin({ fill: "#EB5757" });
-            this.shareSkin = new Skin({ fill: "#56CCF2" });
             this.click = 0;
-            content.skin = this.startSkin;
         },
         onTouchBegan: function(content) {
           KEYBOARD.hide();
@@ -121,14 +109,11 @@ var recordButtonTemplate = Container.template($ => ({
         },
         onTouchEnded: function(content) {
             if (this.click == 0) {
-              content.skin = this.stopSkin;
-              this.click = 1;
-              StringPane2.string = "Stop Dancing";
-              
+              buttonPane.url = "assets/moveset/stopDancing.png";
+              this.click = 1;              
             } else if (this.click == 1) {
-              content.skin = this.shareSkin;
+              buttonPane.url = "assets/moveset/shareDancing.png";
               this.click = 2;
-              StringPane2.string = "Share MoveSet";
             } else if (this.click == 2) {
               changeScreen(sharingMovesetScreen);
             }
@@ -152,7 +137,7 @@ class AppBehavior extends Behavior {
 		        		}
 		        		else if (result < 0.3){
 		        			StringPane3.string = "Weak Signal";
-		        			StringPane3.style = textStyle;
+		        			StringPane3.style = whiteStyle2;
 		        			bluetoothButton.skin = yellowSkin;
 		        		
 		        		}
@@ -179,15 +164,28 @@ application.behavior = new AppBehavior();
 
 var startButton = new recordButtonTemplate({ string: "Start Dancing", top: 20});
 
-export let newMovesetScreen = new Column({
-    left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
-    name: 'newMovesetContainer',
-    contents: [
-        new Navbar(),
-        StringPane,
-        new MyField({name: ""}),
-        musicButton,
-        bluetoothButton,
-        startButton  
-    ],
+var menuBackground = new Picture({
+   	top: 0, bottom: 0, left: 0, right: 0,
+    url: "assets/menuBackground.png"
 });
+var titleBackgroundColor = new Skin({ fill: "#BFBFBF" });
+
+export let newMovesetScreen = new Layer({
+  	top: 0, bottom: 0, left: 0, right: 0,
+  	skin: titleBackgroundColor,
+  	contents: [
+  		menuBackground,
+	  	new Column({
+	    left: 0, right: 0, top: 0, bottom: 0,
+	    name: 'newMovesetContainer',
+	    contents: [
+	        new Navbar(),
+	        title,
+	        new MyField({name: ""}),
+	        music,
+	        bluetoothButton,
+	        startButton  
+	    ],
+	}),
+	],});
+
