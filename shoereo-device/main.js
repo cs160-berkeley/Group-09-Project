@@ -39,6 +39,14 @@ class AppBehavior extends Behavior {
                    analog: {pin: 53, direction: "input"},
                 }
              },
+        recordme: {
+              require: "Analog",
+              pins: {
+                   power: {pin: 55, voltage: 3.3, type: "Power"},
+                   ground: {pin: 56, type: "Ground"},
+                   analog: {pin: 57, direction: "input"},
+              }
+            },
             }, function(success) {
            if (!success) trace("Failed to configure\n");
            else {
@@ -58,3 +66,4 @@ class AppBehavior extends Behavior {
     }
 }
 application.behavior = new AppBehavior();
+
