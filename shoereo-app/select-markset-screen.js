@@ -34,24 +34,33 @@ let CreateBar = Layer.template($ => ({
 	})
 }));
 
-export let selectMarksetScreen = new Column({
+export let selectMarksetScreen = new Layer({
     left: 0, right: 0, top: 0, bottom: 0, skin: backgroundSkin,
     name: 'selectMarksetContainer',
     contents: [
-        new Navbar(),
-        new Picture({ left: 0, right: 0, top: 30, url:"assets/markset/selectMarkset.png"}),
-        new Column({
-          left: 0, right: 0, top: 50, bottom: 0, skin: backgroundSkin,
-          contents: [
-            new CreateBar(),
-						new MarksetBar({title: "Markset 1"}),
-						new MarksetBar({title: "Markset 2"}),
-						new MarksetBar({title: "Markset 3"}),
-						new MarksetBar({title: "Markset 4"}),
-						new MarksetBar({title: "Markset 5"}),
-						new MarksetBar({title: "Markset 6"}),
-          ],
-        }),
+			new Picture({
+        top: 0, bottom: 0, right: 0, left: 0,
+        url: "assets/menuBackground.png"
+      }),
+      new Column({
+        top: 0, bottom: 0, right: 0, left: 0,
+        contents: [
+	        new Navbar(),
+	        new Picture({ left: 0, right: 0, top: 30, url:"assets/markset/selectMarkset.png"}),
+	        new Column({
+	          left: 0, right: 0, top: 50, bottom: 0,
+	          contents: [
+	            new CreateBar(),
+							new MarksetBar({title: "Markset 1"}),
+							new MarksetBar({title: "Markset 2"}),
+							new MarksetBar({title: "Markset 3"}),
+							new MarksetBar({title: "Markset 4"}),
+							new MarksetBar({title: "Markset 5"}),
+							new MarksetBar({title: "Markset 6"}),
+	          ],
+	        }),
+				]
+			})
     ],
 		behavior: Behavior({
       onTouchEnded: function(content) {
