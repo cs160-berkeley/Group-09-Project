@@ -80,18 +80,22 @@ let StringPane3 = new Label({
 
 //Music
 var music = new Picture({
- 	top: 10,
+ 	top: 20,
  	url: "assets/moveset/selectMusic.png",
 });
 
-let bluetoothButton = new Container({height: 40, width: 250, top: 175, skin: greenSkin, 
+
+var recording = new Picture({
+ 	top: 20,
+ 	url: "",
+});
+
+let bluetoothButton = new Container({height: 40, width: 250, top: 85, skin: greenSkin, 
   contents: [
     new Picture({left: 5, height: 30, width: 30, url: "img/bluetooth.png", active: true,}),
     StringPane3,
   ]
 });
-
-
 
 var recordButtonTemplate = Container.template($ => ({
   top: $.top, left: ((375 - 250)/2), width: 250, height: 80, active: true, 
@@ -112,6 +116,7 @@ var recordButtonTemplate = Container.template($ => ({
               this.click = 1;              
             } else if (this.click == 1) {
               buttonPane.url = "assets/moveset/shareDancing.png";
+              recording.url = "";
               this.click = 2;
             } else if (this.click == 2) {
               changeScreen(sharingMovesetScreen);
@@ -144,6 +149,15 @@ class AppBehavior extends Behavior {
 		        			StringPane3.string = "Shoes Connected!";
 		        			StringPane3.style = whiteStyle2;
 		        			bluetoothButton.skin = greenSkin;
+		        		}
+		        		
+		        	});
+		        	remotePins.repeat("/recordme/read", 50, result2 => {
+		        		if (result2 == 0){
+							recording.url = "";		
+		        		}
+		        		else if (result2 == 1){
+		        			recording.url = "assets/moveset/recording.png";
 		        		}
 		        		
 		        	});
@@ -183,7 +197,8 @@ export let newMovesetScreen = new Layer({
 	        new MyField({name: ""}),
 	        music,
 	        bluetoothButton,
-	        startButton,  
+	        startButton,
+	        recording,  
 	    ],
 	}),
 	],});
