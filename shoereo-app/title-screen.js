@@ -15,10 +15,10 @@ var menuButtonTemplate = Container.template($ => ({
             $.img.url = $.upURL;
         },
         onTouchBegan: function(content) {
-						$.img.url = $.downURL;
+			$.img.url = $.downURL;
         },
         onTouchEnded: function(content) {
-						$.img.url = $.upURL;
+			$.img.url = $.upURL;
             if ($.number == 1) {
 				changeScreen(selectMarksetScreen);
             } else if ($.number == 2) {
