@@ -42,16 +42,16 @@ var settingsButton = new Container({
 		helpPicture
  	],
  	behavior: Behavior({
- 		onCreate: function(content) {
-            this.upURL = "assets/title/help.png";
-            this.downURL = "assets/title/helpSelect.png";
-         },
-         onTouchBegan: function(content) {
-            helpPicture.url = "assets/title/helpSelect.png";
-         },
-         onTouchEnded: function(content) {
-            helpPicture.url = "assets/title/help.png";
- 		}
+		onCreate: function(content) {
+			this.upURL = "assets/title/help.png";
+			this.downURL = "assets/title/helpSelect.png";
+		},
+		onTouchBegan: function(content) {
+			helpPicture.url = "assets/title/helpSelect.png";
+		},
+		onTouchEnded: function(content) {
+			helpPicture.url = "assets/title/help.png";
+		}
  	})
  });
 
