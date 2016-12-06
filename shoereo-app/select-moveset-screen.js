@@ -76,7 +76,7 @@ let ConfirmDeleteBar = Layer.template($ => ({
   ],
   behavior: Behavior({
     onTouchEnded: function(content) {
-      for (var i = 0; i < deleteMovesetArray.length; i++) {
+      for (let i = 0; i < deleteMovesetArray.length; i++) {
         danceTitles.splice(danceTitles.indexOf(deleteMovesetArray[i]), 1);
       }
       deleteMovesetArray = [];
