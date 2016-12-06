@@ -92,7 +92,6 @@ var redCheck = Picture.template($ => ({ right: 17, url: "assets/moveset/check1.p
 
 let DeleteMovesetBar = Layer.template($ => ({
   left: 30, right: 30, bottom: 20, active: true,
-  name: $.title,
   contents: [
     new Picture({ left: 0, right: 0, url:"assets/moveset/friendBar.png" }),
     new Picture({ right: 20, url: "assets/moveset/deleteBox.png" }),
