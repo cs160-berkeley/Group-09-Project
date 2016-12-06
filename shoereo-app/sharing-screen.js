@@ -77,6 +77,10 @@ let FriendBar = Picture.template($ => ({
         content.url = "assets/social/friendCheckedBar.png";
         this.checked = true;
       }
+    },
+    reset: function(content) {
+      content.url = "assets/social/friendBar.png";
+      this.checked = false;
     }
   })
 }));
@@ -114,6 +118,7 @@ export let sharingFriendsScreen = new Layer({
           behavior: Behavior({
             onTouchEnded: function(content) {
               switchTitleScreen();
+              var contentObj = sharingFriendsScreen.distribute('reset');
             }
           })
         }),
