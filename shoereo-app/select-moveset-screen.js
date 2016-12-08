@@ -1,5 +1,5 @@
 /* === IMPORT STATEMENTS === */
-import { changeScreen, confirmDelete } from "main";
+import { changeScreen, confirmDelete, saveMoveset } from "main";
 import { newMovesetScreen } from "new-moveset-screen";
 import { performanceScreen } from "performance-screen";
 import { sharingMovesetScreen } from "sharing-screen";
@@ -55,7 +55,7 @@ var selectMovesetScreenTemplate = Layer.template($ => ({
 	          left: 0, right: 0, top: 50, bottom: 0,
 	          contents: [
 	            new CreateBar(),
-							danceTitles.map(danceTitle => 
+							danceTitles.map(danceTitle =>
                 new MovesetBar({ title: danceTitle })
               )
 	          ],
@@ -129,7 +129,7 @@ let deleteMovesetScreenTemplate = Layer.template($ => ({
             left: 0, right: 0, top: 50, bottom: 0,
             contents: [
               new ConfirmDeleteBar(),
-              danceTitles.map(danceTitle => 
+              danceTitles.map(danceTitle =>
                 new DeleteMovesetBar({ title: danceTitle, redCheck: new redCheck() })
               )
             ],
@@ -140,6 +140,13 @@ let deleteMovesetScreenTemplate = Layer.template($ => ({
 }));
 
 export let deleteMovesetScreen = new deleteMovesetScreenTemplate();
+
+export let updateMovesetScreen = function(newTitle) {
+	danceTitles.push(newTitle);
+	selectMovesetScreen = new selectMovesetScreenTemplate();
+	deleteMovesetScreen = new deleteMovesetScreenTemplate();
+	saveMoveset();
+}
 
 /* === VIEW MOVESET SCREEN === */
 

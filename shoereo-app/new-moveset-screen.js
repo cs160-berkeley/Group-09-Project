@@ -2,6 +2,7 @@
 import { changeScreen } from "main";
 import { sharingMovesetScreen } from "sharing-screen";
 import { Navbar } from "navbar";
+import { updateMovesetScreen } from "select-moveset-screen";
 import Pins from "pins";
 
 /* === NEW MOVESET SCREEN === */
@@ -22,14 +23,16 @@ let fieldHintStyle = new Style({ color: '#aaa', font: '24px', horizontal: 'left'
 let whiteSkin = new Skin({ fill: "white" });
 let fieldLabelSkin = new Skin({ fill: ['transparent', 'transparent', '#C0C0C0', '#acd473'] });
 
-let MyField = Container.template($ => ({ 
+let movesetName = "New Moveset";
+
+let MyField = Container.template($ => ({
     width: 250, height: 36, top: 75, skin: nameInputSkin, contents: [
-        Scroller($, { 
-            left: 4, right: 4, top: 4, bottom: 4, active: true, 
-            Behavior: FieldScrollerBehavior, clip: true, 
+        Scroller($, {
+            left: 4, right: 4, top: 4, bottom: 4, active: true,
+            Behavior: FieldScrollerBehavior, clip: true,
             contents: [
-                Label($, { 
-                    left: 0, top: 0, bottom: 0, skin: fieldLabelSkin, 
+                Label($, {
+                    left: 0, top: 0, bottom: 0, skin: fieldLabelSkin,
                     style: fieldStyle, anchor: 'NAME',
                     editable: true, string: $.name,
                     Behavior: class extends FieldLabelBehavior {
@@ -38,6 +41,7 @@ let MyField = Container.template($ => ({
                             data.name = label.string;
                             label.container.hint.visible = (data.name.length == 0);
                             trace(data.name+"\n");
+                            movesetName = data.name;
                         }
                     },
                 }),
@@ -90,7 +94,7 @@ var recording = new Picture({
  	url: "",
 });
 
-let bluetoothButton = new Container({height: 40, width: 250, top: 85, skin: greenSkin, 
+let bluetoothButton = new Container({height: 40, width: 250, top: 85, skin: greenSkin,
   contents: [
     new Picture({left: 5, height: 30, width: 30, url: "img/bluetooth.png", active: true,}),
     StringPane3,
@@ -98,7 +102,7 @@ let bluetoothButton = new Container({height: 40, width: 250, top: 85, skin: gree
 });
 
 var recordButtonTemplate = Container.template($ => ({
-  top: $.top, left: ((375 - 250)/2), width: 250, height: 80, active: true, 
+  top: $.top, left: ((375 - 250)/2), width: 250, height: 80, active: true,
   contents: [
     buttonPane,
   ],
@@ -113,13 +117,17 @@ var recordButtonTemplate = Container.template($ => ({
         onTouchEnded: function(content) {
             if (this.click == 0) {
               buttonPane.url = "assets/moveset/stopDancing.png";
-              this.click = 1;              
+              this.click = 1;
             } else if (this.click == 1) {
               buttonPane.url = "assets/moveset/shareDancing.png";
               recording.url = "";
               this.click = 2;
+              updateMovesetScreen(movesetName);
             } else if (this.click == 2) {
               changeScreen(sharingMovesetScreen);
+              movesetName = "New Moveset";
+              buttonPane.url = "assets/moveset/startDancing.png";
+              this.click = 0;
             }
     }
   })
@@ -137,33 +145,33 @@ class AppBehavior extends Behavior {
 		        		if (result == 0){
 							StringPane3.string = "Not Connected";
 							StringPane3.style = whiteStyle2;
-							bluetoothButton.skin = redSkin;	
+							bluetoothButton.skin = redSkin;
 		        		}
 		        		else if (result < 0.3){
 		        			StringPane3.string = "Weak Signal";
 		        			StringPane3.style = whiteStyle2;
 		        			bluetoothButton.skin = yellowSkin;
-		        		
+
 		        		}
 		        		else{
 		        			StringPane3.string = "Shoes Connected!";
 		        			StringPane3.style = whiteStyle2;
 		        			bluetoothButton.skin = greenSkin;
 		        		}
-		        		
+
 		        	});
 		        	remotePins.repeat("/recordme/read", 50, result2 => {
 		        		if (result2 == 0){
-							recording.url = "";		
+							recording.url = "";
 		        		}
 		        		else if (result2 == 1){
 		        			recording.url = "assets/moveset/recording.png";
 		        		}
-		        		
+
 		        	});
-		        	
+
                 }
-            }, 
+            },
             connectionDesc => {
                 if (connectionDesc.name == "pins-share") {
                     trace("Disconnected from remote pins\n");
@@ -198,7 +206,7 @@ export let newMovesetScreen = new Layer({
 	        music,
 	        bluetoothButton,
 	        startButton,
-	        recording,  
+	        recording,
 	    ],
 	}),
 	],});
