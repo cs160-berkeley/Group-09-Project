@@ -2,6 +2,7 @@
 import { changeScreen } from "main";
 import { selectMovesetScreen } from "select-moveset-screen";
 import { selectMarksetScreen } from "select-markset-screen";
+import { helpScreen } from "help";
 
 /* === TITLE SCREEN === */
 
@@ -20,7 +21,7 @@ var menuButtonTemplate = Container.template($ => ({
         onTouchEnded: function(content) {
 			$.img.url = $.upURL;
             if ($.number == 1) {
-				changeScreen(selectMarksetScreen);
+							changeScreen(selectMarksetScreen);
             } else if ($.number == 2) {
             	changeScreen(selectMovesetScreen);
             } else if ($.number == 3) {
@@ -51,6 +52,7 @@ var settingsButton = new Container({
 		},
 		onTouchEnded: function(content) {
 			helpPicture.url = "assets/title/help.png";
+			changeScreen(helpScreen);
 		}
  	})
  });
